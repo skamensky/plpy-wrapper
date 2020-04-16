@@ -1,0 +1,15 @@
+version: 2
+
+sphinx:
+  configuration: docs/source/conf.py
+# once pypi is updated with the latest sphinx_autodoc_typehints we can turn fail on warnings to true
+# this is because they are using deprecated API's but will release an update that will fix that at some point
+# fail_on_warning: true
+
+python:
+  version: 3.7
+  install:
+    - method: pip
+      path: .
+      extra_requirements:
+        - docs

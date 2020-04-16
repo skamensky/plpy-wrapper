@@ -1,0 +1,36 @@
+drop function if exists {func_name};
+create or replace function {func_name}() returns trigger as $$
+from plpy_wrapper import PLPYWrapper,Trigger
+class {capital_camel_case}(Trigger):
+
+    def before_insert(self):
+        #put your before insert logic here (or delete this method if you don't want anything to happen before insert)
+        pass
+
+    def after_insert(self):
+        #put your after insert logic here (or delete this method if you don't want anything to happen after insert)
+        pass
+
+    def before_update(self):
+        #put your before update logic here (or delete this method if you don't want anything to happen before update)
+        pass
+
+    def after_update(self):
+        #put your after update logic here (or delete this method if you don't want anything to happen after update)
+        pass
+
+    def before_delete(self):
+        #put your before delete logic here (or delete this method if you don't want anything to happen before delete)
+        pass
+
+    def after_delete(self):
+        #put your before after delete logic here (or delete this method if you don't want anything to happen after delete)
+        pass
+
+trigger_handler = {capital_camel_case}(PLPYWrapper(globals()))
+#this runs the appropriate method
+trigger_handler.execute()
+#based on changes you made to the data or events you initiated, this tells postgres to change data, skip the event, etc.
+#The return value is only relevant in BEFORE/INSTEAD OF triggers
+return trigger_handler.trigger_return_val
+$$ LANGUAGE plpython3u;

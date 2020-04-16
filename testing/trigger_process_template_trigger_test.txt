@@ -1,0 +1,37 @@
+drop function if exists {func_name};
+create or replace function {func_name}() returns trigger as $$
+from plpy_wrapper import PLPYWrapper,Trigger
+import json
+
+
+class _Trigger(Trigger):
+
+    def insert_into_trigger_log(self,add_data):
+        plan = self.plpy_wrapper.prepare('''INSERT into "logging".trigger_run_log (TD_data,add_data) values ($1,$2)''',['JSON','text'])
+        self.plpy_wrapper.execute_plan(plan,[json.dumps(TD),add_data])
+
+    def before_insert(self):
+        {before_insert_body}
+
+    def after_insert(self):
+        {after_insert_body}
+
+    def before_update(self):
+        {before_update_body}
+
+    def after_update(self):
+        {after_update_body}
+
+    def before_delete(self):
+        {before_delete_body}
+
+    def after_delete(self):
+        {after_delete_body}
+
+trigger_handler = _Trigger(PLPYWrapper(globals()))
+#this runs the appropriate method
+trigger_handler.execute()
+#based on changes you made to the data or events you initiated, this tells postgres to change data, skip the event, etc.
+#The return value is only relevant in BEFORE/INSTEAD OF triggers
+return trigger_handler.trigger_return_val
+$$ LANGUAGE plpython3u;

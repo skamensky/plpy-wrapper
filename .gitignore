@@ -1,0 +1,8 @@
+TODO
+__pycache__
+docs/build
+testing/docker/coverage_results.xml
+testing/docker/unittest_results.txt
+dist
+build
+*.egg-info/
