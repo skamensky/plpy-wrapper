@@ -63,6 +63,6 @@ The `PLPY_WRAPPER` variable is re-used throughout all the tests, database setup,
 However, for tests that require the `TD` variable to be populated, this isn't enough since `PLPY_WRAPPER` came from the globals within the `DO` statement which is not a trigger context and therefore does not contain the `TD` variable.
 
 The solution used, as stated above, is for each trigger to save the `TD` variable as a row in a table created specifically for this purpose, the `trigger_run_log` table.
-After the trigger has run this table is queried and the `TD` data is injected into a new `plpy_wrapper` object which is contains all the data from the `PLPY_WRAPPER` variable plus the newly received `TD` dictionary. You can see this happening in the [execute_sql_and_get_trigger_obj](TODO ADD LINK TO FUNCTION HERE AFTER INITIAL COMMIT) method.
+After the trigger has run this table is queried and the `TD` data is injected into a new `plpy_wrapper` object which is contains all the data from the `PLPY_WRAPPER` variable plus the newly received `TD` dictionary. You can see this happening in the [execute_sql_and_get_trigger_obj](https://github.com/skamensky/plpy-wrapper/blob/d2c02f196c9a179432c3cee9f6b6b61279f1f40c/testing/tests.py#L110) method.
 The tests receive a `plpy_wrapper` object that for all intents and purposes is exactly what the `plyp_wrapper` object would appear as in a trigger context.
 This allows for accurate unit testing and better code coverage.
