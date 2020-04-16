@@ -13,7 +13,7 @@ setup(
             "sphinx_rtd_theme",
         ],
         "pypipublish": ["wheel"],
-    },  # Optional
+    },
     license="MIT",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
